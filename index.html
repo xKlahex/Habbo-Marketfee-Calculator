@@ -120,7 +120,7 @@ function calculateFee() {
   var receiverGets = amount - fee;
   var receiverGetsGBs = (receiverGets % 50 !== 0) ? Math.floor(receiverGets / 50) + " Gbs and " + (receiverGets % 50) + " coins" : Math.floor(receiverGets / 50) + " Gbs";
   var unityFeeGBs = Math.floor(unityFee / 50); 
-  result.innerHTML = "<div><span class=\"output-label\">Selling Amount:</span><span class=\"output-value\">" + amount + " coins (" + gbs + " Gbs)</span></div><div><span class=\"output-label\">Flash Fee:</span><span class=\"output-value\">" + fee + " coins (" + feeGBs + " Gbs)</span></div><div><span class=\"output-label\">Unity Fee:</span><span class=\"output-value\">" + unityFee + " coins (" + unityFeeGBs + " Gbs)</span></div><div><span class=\"output-label\">You Could save:</span><span class=\"output-value\">" + savedAmount + " coins (" + savedAmountGBs + " Gbs)</span></div><div><span class=\"output-label\">Buyer Gets:</span><span class=\"output-value\">" + receiverGets + " coins (" + receiverGetsGBs + ")</span></div>";
+  result.innerHTML = "<div><span class=\"output-label\">Selling Amount:</span><span class=\"output-value\">" + amount + " coins (" + gbs + " Gbs)</span></div><div><span class=\"output-label\">Marketplace Fee:</span><span class=\"output-value\">" + fee + " coins (" + feeGBs + " Gbs)</span></div><div><span class=\"output-label\">99c Method Fee:</span><span class=\"output-value\">" + unityFee + " coins (" + unityFeeGBs + " Gbs)</span></div><div><span class=\"output-label\">You Could save:</span><span class=\"output-value\">" + savedAmount + " coins (" + savedAmountGBs + " Gbs)</span></div><div><span class=\"output-label\">Buyer Gets:</span><span class=\"output-value\">" + receiverGets + " coins (" + receiverGetsGBs + ")</span></div>";
 }
 
 

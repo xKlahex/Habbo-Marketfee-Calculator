@@ -99,6 +99,8 @@
     <form onsubmit="calculateFee(); return false;">
       <label for="amount">Enter the amount of coins you want to sell:</label>
       <input type="number" id="amount" name="amount" required max="100000" oninput="if(this.value > 100000) this.value = 100000;">
+<label for="dollarPerGb">Enter the amount of coins per GB that the buyer gets:</label>
+<input type="number" id="dollarPerGb" name="dollarPerGb" required step="0.01">
       <button type="submit">Calculate</button>
     </form>
     <div id="result"></div>
@@ -110,6 +112,7 @@
 
 function calculateFee() {
   var amount = document.getElementById("amount").value;
+  var dollarPerGb = document.getElementById("dollarPerGb").value;
   var fee = calculateFinalPrice(amount);
   var unityFee = Math.ceil((amount/99) * 2);
   var savedAmount = fee - unityFee;
@@ -120,7 +123,8 @@ function calculateFee() {
   var receiverGets = amount - fee;
   var receiverGetsGBs = (receiverGets % 50 !== 0) ? Math.floor(receiverGets / 50) + " Gbs and " + (receiverGets % 50) + " coins" : Math.floor(receiverGets / 50) + " Gbs";
   var unityFeeGBs = Math.floor(unityFee / 50); 
-  result.innerHTML = "<div><span class=\"output-label\">Selling Amount:</span><span class=\"output-value\">" + amount + " coins (" + gbs + " Gbs)</span></div><div><span class=\"output-label\">Marketplace Fee:</span><span class=\"output-value\">" + fee + " coins (" + feeGBs + " Gbs)</span></div><div><span class=\"output-label\">99c Method Fee:</span><span class=\"output-value\">" + unityFee + " coins (" + unityFeeGBs + " Gbs)</span></div><div><span class=\"output-label\">You Could save:</span><span class=\"output-value\">" + savedAmount + " coins (" + savedAmountGBs + " Gbs)</span></div><div><span class=\"output-label\">Buyer Gets:</span><span class=\"output-value\">" + receiverGets + " coins (" + receiverGetsGBs + ")</span></div>";
+  var dollarPerGbAmount = ((receiverGets / 50) * dollarPerGb).toFixed(2);
+  result.innerHTML = "<div><span class=\"output-label\">Selling Amount:</span><span class=\"output-value\">" + amount + " coins (" + gbs + " Gbs)</span></div><div><span class=\"output-label\">Marketplace Fee:</span><span class=\"output-value\">" + fee + " coins (" + feeGBs + " Gbs)</span></div><div><span class=\"output-label\">99c Method Fee:</span><span class=\"output-value\">" + unityFee + " coins (" + unityFeeGBs + " Gbs)</span></div><div><span class=\"output-label\">You Could save:</span><span class=\"output-value\">" + savedAmount + " coins (" + savedAmountGBs + " Gbs)</span></div><div><span class=\"output-label\">Buyer Gets:</span><span class=\"output-value\">" + receiverGets + " coins (" + receiverGetsGBs + ")</span></div><div><span class=\"output-label\">You should get:</span><span class=\"output-value\">$" + dollarPerGbAmount + " </span></div>";
 }
 
 

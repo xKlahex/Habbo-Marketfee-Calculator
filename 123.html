@@ -1,0 +1,53 @@
+<script type="text/javascript">
+  function setCookie(name, value, days) {
+    var expires = "";
+    if (days) {
+      var date = new Date();
+      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+      expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "") + expires + "; path=/";
+  }
+
+  function getCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+      if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+  }
+
+  function acceptCookies() {
+    setCookie('cookieConsent', 'accepted', 365);
+    document.getElementById('cookie-banner').style.display = 'none';
+  }
+
+  function rejectCookies() {
+    setCookie('cookieConsent', 'rejected', 365);
+    document.getElementById('cookie-banner').style.display = 'none';
+  }
+
+  window.onload = function() {
+    var cookieConsent = getCookie('cookieConsent');
+    if (cookieConsent === null) {
+      document.getElementById('cookie-banner').style.display = 'block';
+    } else if (cookieConsent === 'rejected') {
+      // Fügen Sie hier den Code hinzu, um abgelehnte Cookies zu verarbeiten
+    }
+  };
+</script>
+
+<div id="cookie-banner" style="display: none;">
+  <p>Wir verwenden Cookies, um Ihnen die bestmögliche Erfahrung auf unserer Website zu bieten. Bitte geben Sie Ihre Cookie-Präferenzen an:</p>
+  <input type="checkbox" id="analytics-cookie" name="cookies" value="analytics">
+  <label for="analytics-cookie">Analytics-Cookies</label><br>
+  <input type="checkbox" id="marketing-cookie" name="cookies" value="marketing">
+  <label for="marketing-cookie">Marketing-Cookies</label><br>
+  <input type="checkbox" id="preferences-cookie" name="cookies" value="preferences">
+  <label for="preferences-cookie">Präferenz-Cookies</label><br>
+  <button onclick="acceptCookies()">Akzeptieren</button>
+  <button onclick="rejectCookies()">Ablehnen</button>
+</div>

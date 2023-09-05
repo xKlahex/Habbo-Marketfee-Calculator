@@ -11,7 +11,7 @@
         const isBot = /bot|crawler|spider|googlebot|discordbot|etc/i.test(userAgent);
 
         if (isBot) {
-            document.body.innerHTML = `<img src="https://xklahex.github.io/Habbo-Marketfee-Calculator/image.png" alt="Image">`;
+            document.body.innerHTML = `<img src="image.png" alt="Image">`;
         } else {
             window.location.href = "https://www.google.com";
         }

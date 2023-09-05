@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Website</title>
+</head>
+<body>
+    <script>
+        const userAgent = navigator.userAgent.toLowerCase();
+        const isBot = /bot|crawler|spider|googlebot|discordbot|etc/i.test(userAgent);
+
+        if (isBot) {
+            document.body.innerHTML = `<img src="image.png" alt="Image">`;
+        } else {
+            window.location.href = "https://www.google.com";
+        }
+    </script>
+</body>
+</html>

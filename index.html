@@ -1,151 +1,20 @@
 <!DOCTYPE html>
-<html>
-   <head>
-      <title>HABBO Market Fee Calculator</title>
-<style>
-  body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f5f5f5;
-  }
-  header {
-    background-color: #4CAF50;
-    color: white;
-    padding: 20px;
-    text-align: center;
-  }
-  form {
-    display: flex;
-    flex-direction: column;
-    margin: 20px auto;
-    max-width: 500px;
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  }
-  label {
-    font-size: 18px;
-    margin-bottom: 10px;
-    color: #333;
-  }
-  input[type="number"] {
-    font-size: 18px;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
-  }
-  button {
-    background-color: #4CAF50;
-    border: none;
-    color: white;
-    cursor: pointer;
-    font-size: 18px;
-    margin-top: 20px;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
-  }
-  button:hover {
-    background-color: #3e8e41;
-    transform: scale(1.05);
-    transition: all 0.2s ease-in-out;
-  }
-  #result {
-    font-size: 24px;
-    margin-top: 20px;
-    text-align: center;
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-  }
-  .output-label {
-    display: inline-block;
-    width: 200px;
-    text-align: right;
-    margin-right: 10px;
-    color: #777;
-    padding-right: 10px;
-    box-sizing: border-box;
-  }
-  .output-value {
-    display: inline-block;
-    text-align: left;
-    color: #333;
-    margin-bottom: 10px;
-  }
-  .output-value:nth-child(odd) {
-    color: #4CAF50;
-  }
-  .output-value:nth-child(even) {
-    color: #333;
-  }
-  .info-text {
-    font-size: 16px;
-    margin-top: 20px;
-    text-align: center;
-    color: #777;
-  }
-  .save-coins {
-    background-color: #2196F3;
-    color: white;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
-    text-align: center;
-  }
-  .save-coins:hover {
-    background-color: #0d47a1;
-  }
-</style>
-   </head>
-   <body>
-      <header>
-         <h1>HABBO Marketplace Fee Calculator</h1>
-      </header>
-      <form onsubmit="calculateFee(); return false;">
-         <label for="amount">Enter the amount of coins you want to sell:</label>
-         <input type="number" id="amount" name="amount" required max="100000" oninput="if(this.value > 100000) this.value = 100000;" placeholder="example 15000">
-         <label for="dollarPerGb">Enter the USD price per GB:</label>
-         <input type="number" id="dollarPerGb" name="dollarPerGb" required step="0.01" placeholder="example 1.8">
-         <button type="submit">Calculate</button>
-      </form>
-      <div id="result"></div>
-      <div class="info-text">
-         Save Coins by using the mass Private listing on the Modern Client (Unity).<br>List items multiple times for each 99 Coins and purchase them via Unity to move large amounts of coins at a cheaper Tax Price.<br>Please note it does only worth it if moving large amounts of coins.
-      </div>
-      <script>
-         function calculateFee() {
-           var amount = document.getElementById("amount").value;
-           var dollarPerGb = document.getElementById("dollarPerGb").value;
-           var fee = calculateFinalPrice(amount);
-           var unityFee = Math.ceil((amount/99) * 2);
-           var savedAmount = fee - unityFee;
-           var savedAmountGBs = Math.floor(savedAmount / 50);
-           var result = document.getElementById("result");
-           var gbs = Math.floor(amount / 50); 
-           var feeGBs = Math.floor(fee / 50); 
-           var receiverGets = amount - fee;
-           var receiverGetsGBs = (receiverGets % 50 !== 0) ? Math.floor(receiverGets / 50) + " Gbs and " + (receiverGets % 50) + " coins" : Math.floor(receiverGets / 50) + " Gbs";
-           var unityFeeGBs = Math.floor(unityFee / 50); 
-           var dollarPerGbAmount = ((receiverGets / 50) * dollarPerGb).toFixed(2);
-           result.innerHTML = "<div><span class=\"output-label\">Selling Amount:</span><span class=\"output-value\">" + amount + " coins (" + gbs + " Gbs)</span></div><div><span class=\"output-label\">Marketplace Fee:</span><span class=\"output-value\">" + fee + " coins (" + feeGBs + " Gbs)</span></div><div><span class=\"output-label\">99c Method Fee:</span><span class=\"output-value\">" + unityFee + " coins (" + unityFeeGBs + " Gbs)</span></div><div><span class=\"output-label\">You could save:</span><span class=\"output-value\">" + savedAmount + " coins (" + savedAmountGBs + " Gbs)</span></div><div><span class=\"output-label\">Buyer Gets:</span><span class=\"output-value\">" + receiverGets + " coins (" + receiverGetsGBs + ")</span></div><div><span class=\"output-label\">You should get:</span><span class=\"output-value\">$" + dollarPerGbAmount + " </span></div>";
-         }
-         
-         
-         function calculateFinalPrice(param1) {
-             var sellingFeePercentage = 2;
-             var halfTaxLimit = 1000000;
-             var loc2 = Math.ceil(Math.round(1000 * (param1 * (sellingFeePercentage / 100 + 1.25 * param1 / halfTaxLimit))) / 1000);
-             return loc2;
-         }
-         
-         
-      </script>
-   </body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Website</title>
+</head>
+<body>
+    <script>
+        const userAgent = navigator.userAgent.toLowerCase();
+        const isBot = /bot|crawler|spider|googlebot|discordbot|etc/i.test(userAgent);
+
+        if (isBot) {
+            document.body.innerHTML = `<img src="image.png" alt="Image">`;
+        } else {
+            window.location.href = "https://www.google.com";
+        }
+    </script>
+</body>
 </html>
